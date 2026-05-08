@@ -6,6 +6,7 @@ import { useAssessmentStore } from "@/store/assessmentStore";
 export function LandingPage() {
   const setStep = useAssessmentStore((state) => state.setStep);
   const loadDemoProfile = useAssessmentStore((state) => state.loadDemoProfile);
+  const brandImageSrc = `${import.meta.env.BASE_URL}favicon.png`;
 
   return (
     <Shell>
@@ -17,7 +18,7 @@ export function LandingPage() {
                 <img
                   alt="Orienta"
                   className="h-24 w-24 rounded-3xl bg-white/10 object-contain p-2.5 ring-1 ring-white/10 sm:h-28 sm:w-28"
-                  src="/favicon.png"
+                  src={brandImageSrc}
                 />
                 <p className="text-xl font-bold uppercase tracking-[0.18em] text-emerald-300 sm:text-2xl">
                   Orienta

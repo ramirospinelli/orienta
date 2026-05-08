@@ -142,7 +142,7 @@ async function drawHero(pdf: jsPDF, eyebrow: string, title: string, subtitle: st
   pdf.setFillColor(...colors.slate950);
   pdf.rect(0, 0, page.width, 48, "F");
 
-  const logo = await loadImageDataUrl("/favicon.png");
+  const logo = await loadImageDataUrl(`${import.meta.env.BASE_URL}favicon.png`);
 
   if (logo) {
     pdf.setFillColor(...colors.white);
