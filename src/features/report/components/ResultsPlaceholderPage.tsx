@@ -24,9 +24,9 @@ export function ResultsPlaceholderPage() {
 
     try {
       if (kind === "report") {
-        exportReportToPdf(report, `informe-${slugify(userProfile.name)}.pdf`);
+        await exportReportToPdf(report, `informe-${slugify(userProfile.name)}.pdf`);
       } else {
-        exportCvToPdf(cv, `cv-${slugify(userProfile.name)}.pdf`);
+        await exportCvToPdf(cv, `cv-${slugify(userProfile.name)}.pdf`);
       }
     } catch {
       setExportError("No pudimos generar el PDF. Proba nuevamente.");
@@ -168,33 +168,15 @@ export function ResultsPlaceholderPage() {
                 <h3 className="text-lg font-semibold text-slate-900">Acciones</h3>
                 <div className="mt-5 space-y-3">
                   <button
-                    className="inline-flex w-full items-center justify-center rounded-full bg-slate-900 px-5 py-3 text-sm font-semibold text-white transition hover:bg-slate-700"
-                    onClick={resetAssessment}
-                    type="button"
-                  >
-                    Volver a hacer el test
-                  </button>
-                  <button
                     className="inline-flex w-full items-center justify-center rounded-full border border-slate-200 bg-white px-5 py-3 text-sm font-semibold text-slate-700 transition hover:bg-slate-50"
                     onClick={() => setStep("landing")}
                     type="button"
                   >
-                    Volver a landing
+                    Volver
                   </button>
                 </div>
               </section>
 
-              <section className="rounded-[2rem] bg-slate-950 p-7 text-white shadow-sm sm:p-8">
-                <h3 className="text-lg font-semibold">Lectura rapida para la psicologa</h3>
-                <div className="mt-5 grid gap-3">
-                  <MetricRow label="Temperamento" value={result.analytics.dominantTemperament} />
-                  <MetricRow
-                    label="Carrera top"
-                    value={result.recommendedCareers[0]?.title || "Sin sugerencia"}
-                  />
-                  <MetricRow label="Fortalezas" value={String(result.strengths.length)} />
-                </div>
-              </section>
             </div>
           </div>
         ) : (
@@ -215,15 +197,6 @@ function CvPreviewSection({ children, title }: { children: React.ReactNode; titl
     <div>
       <h4 className="text-xs font-semibold uppercase tracking-[0.18em] text-slate-500">{title}</h4>
       <div className="mt-3">{children}</div>
-    </div>
-  );
-}
-
-function MetricRow({ label, value }: { label: string; value: string }) {
-  return (
-    <div className="flex items-center justify-between gap-4 rounded-[1.25rem] border border-white/10 bg-white/5 px-4 py-3">
-      <span className="text-sm text-slate-300">{label}</span>
-      <span className="text-sm font-semibold text-white">{value}</span>
     </div>
   );
 }

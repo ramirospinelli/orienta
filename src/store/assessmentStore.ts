@@ -84,6 +84,7 @@ export const useAssessmentStore = create<AssessmentStore>()(
           mode: "demo",
           consentAccepted: true,
           currentQuestionIndex: 0,
+          userProfile: profile.userProfile,
           result: profile.result,
           step: "results",
         });

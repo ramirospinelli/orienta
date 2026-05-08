@@ -69,7 +69,7 @@ export function AssessmentPage() {
   return (
     <Shell>
       <div className="mx-auto max-w-4xl space-y-6">
-        <section className="rounded-[2rem] bg-white p-8 shadow-sm ring-1 ring-black/5 sm:p-10">
+        <section className="rounded-[2rem] bg-white p-8 pb-36 shadow-sm ring-1 ring-black/5 sm:p-10 sm:pb-10">
           <div className="flex flex-wrap items-center justify-between gap-3">
             <div>
               <p className="text-sm font-semibold uppercase tracking-[0.2em] text-emerald-600">
@@ -93,17 +93,6 @@ export function AssessmentPage() {
             <p className="text-lg leading-8 text-slate-900 sm:text-2xl sm:leading-10">
               {currentQuestion.prompt}
             </p>
-          </div>
-
-          <div className="mt-6 sm:hidden">
-            <button
-              className="inline-flex w-full items-center justify-center rounded-full bg-slate-900 px-6 py-3 text-sm font-semibold text-white transition hover:bg-slate-700 disabled:cursor-not-allowed disabled:opacity-50"
-              disabled={!selectedValue}
-              onClick={handleNext}
-              type="button"
-            >
-              {isLastQuestion ? "Finalizar test" : "Siguiente"}
-            </button>
           </div>
 
           <div className="mt-8 space-y-3">
@@ -132,13 +121,41 @@ export function AssessmentPage() {
             })}
           </div>
 
-          <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:justify-between">
+          <div className="fixed inset-x-0 bottom-0 z-30 border-t border-slate-200 bg-white/95 px-4 pb-[calc(env(safe-area-inset-bottom)+0.75rem)] pt-3 backdrop-blur sm:hidden">
+            <div className="mx-auto flex w-full max-w-4xl flex-col gap-3">
             <button
-              className="inline-flex items-center justify-center rounded-full border border-slate-200 bg-white px-6 py-3 text-sm font-semibold text-slate-700 transition hover:bg-slate-50"
-              onClick={() => setStep("intake")}
+              className="inline-flex w-full items-center justify-center rounded-full bg-slate-900 px-6 py-3 text-sm font-semibold text-white transition hover:bg-slate-700 disabled:cursor-not-allowed disabled:opacity-50"
+              disabled={!selectedValue}
+              onClick={handleNext}
               type="button"
             >
-              Volver a datos
+              {isLastQuestion ? "Finalizar test" : "Siguiente"}
+            </button>
+            <button
+              className="inline-flex w-full items-center justify-center rounded-full border border-slate-200 bg-white px-6 py-3 text-sm font-semibold text-slate-700 transition hover:bg-slate-50 disabled:cursor-not-allowed disabled:opacity-50"
+              disabled={currentQuestionIndex === 0}
+              onClick={goToPreviousQuestion}
+              type="button"
+            >
+              Anterior
+            </button>
+            <button
+              className="inline-flex w-full items-center justify-center rounded-full border border-slate-200 bg-white px-6 py-3 text-sm font-semibold text-slate-700 transition hover:bg-slate-50"
+              onClick={() => setStep("landing")}
+              type="button"
+            >
+              Volver al inicio
+            </button>
+            </div>
+          </div>
+
+          <div className="mt-8 hidden sm:flex sm:flex-row sm:justify-between sm:gap-3">
+            <button
+              className="inline-flex items-center justify-center rounded-full border border-slate-200 bg-white px-6 py-3 text-sm font-semibold text-slate-700 transition hover:bg-slate-50"
+              onClick={() => setStep("landing")}
+              type="button"
+            >
+              Volver al inicio
             </button>
 
             <div className="flex flex-col gap-3 sm:flex-row">

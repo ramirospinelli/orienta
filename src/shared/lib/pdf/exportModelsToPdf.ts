@@ -20,9 +20,9 @@ const colors = {
   white: [255, 255, 255] as const,
 };
 
-export function exportReportToPdf(report: ReportModel, filename: string) {
+export async function exportReportToPdf(report: ReportModel, filename: string) {
   const pdf = createPdf();
-  let y = drawHero(pdf, "ORIENTA", report.title, report.subtitle);
+  let y = await drawHero(pdf, "ORIENTA", report.title, report.subtitle);
 
   y = drawPersonalData(pdf, report.personalData, y + 8);
 
@@ -138,19 +138,28 @@ function createPdf() {
   });
 }
 
-function drawHero(pdf: jsPDF, eyebrow: string, title: string, subtitle: string) {
+async function drawHero(pdf: jsPDF, eyebrow: string, title: string, subtitle: string) {
   pdf.setFillColor(...colors.slate950);
   pdf.rect(0, 0, page.width, 48, "F");
+
+  const logo = await loadImageDataUrl("/favicon.png");
+
+  if (logo) {
+    pdf.setFillColor(...colors.white);
+    pdf.roundedRect(page.margin, 11, 14, 14, 3, 3, "F");
+    pdf.addImage(logo, "PNG", page.margin + 1.8, 12.8, 10.4, 10.4, undefined, "FAST");
+  }
+
   pdf.setTextColor(...colors.emerald100);
   pdf.setFont("helvetica", "bold");
   pdf.setFontSize(9);
-  pdf.text(eyebrow, page.margin, 16);
+  pdf.text(eyebrow, page.margin + 18, 16);
   pdf.setTextColor(...colors.white);
   pdf.setFontSize(24);
-  pdf.text(title, page.margin, 29);
+  pdf.text(title, page.margin + 18, 29);
   pdf.setFont("helvetica", "normal");
   pdf.setFontSize(11);
-  pdf.text(subtitle, page.margin, 39);
+  pdf.text(subtitle, page.margin + 18, 39);
 
   return 56;
 }
@@ -247,4 +256,32 @@ function ensureSpace(pdf: jsPDF, y: number, needed: number) {
 
 function contentWidth() {
   return page.width - page.margin * 2;
+}
+
+async function loadImageDataUrl(src: string) {
+  return new Promise<string | null>((resolve) => {
+    const image = new Image();
+
+    image.onload = () => {
+      try {
+        const canvas = document.createElement("canvas");
+        canvas.width = image.naturalWidth;
+        canvas.height = image.naturalHeight;
+        const context = canvas.getContext("2d");
+
+        if (!context) {
+          resolve(null);
+          return;
+        }
+
+        context.drawImage(image, 0, 0);
+        resolve(canvas.toDataURL("image/png"));
+      } catch {
+        resolve(null);
+      }
+    };
+
+    image.onerror = () => resolve(null);
+    image.src = src;
+  });
 }

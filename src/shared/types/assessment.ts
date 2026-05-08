@@ -97,5 +97,6 @@ export interface DemoProfile {
   id: string;
   label: string;
   description: string;
+  userProfile: UserProfile;
   result: AssessmentResult;
 }

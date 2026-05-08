@@ -21,28 +21,26 @@ export function ConsentPage() {
               Orienta busca ayudarte a conocerte mejor y a abrir conversaciones vocacionales con una profesional. No reemplaza una evaluacion psicologica ni toma decisiones por vos.
             </p>
             <p>
-              Tus respuestas se guardan en este navegador para que puedas retomar el proceso si lo dejaste a la mitad. Al finalizar, se enviara un resumen a la psicologa y vos vas a poder descargar tus PDFs.
+Al finalizar, se enviara un resumen a la psicologa y vos vas a poder descargar tus PDFs.
             </p>
           </div>
 
-          <div className="mt-8 rounded-[1.5rem] bg-amber-50 p-5 text-sm leading-6 text-amber-900 ring-1 ring-amber-200">
-            Usa este resultado como punto de partida para pensar opciones, no como una respuesta cerrada sobre tu futuro.
-          </div>
+          
 
           <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-            <button
-              className="inline-flex items-center justify-center rounded-full bg-slate-900 px-6 py-3 text-sm font-semibold text-white transition hover:bg-slate-700"
-              onClick={acceptConsent}
-              type="button"
-            >
-              Entiendo y quiero continuar
-            </button>
             <button
               className="inline-flex items-center justify-center rounded-full border border-slate-200 bg-white px-6 py-3 text-sm font-semibold text-slate-700 transition hover:bg-slate-50"
               onClick={() => setStep("landing")}
               type="button"
             >
               Volver al inicio
+            </button>
+            <button
+              className="inline-flex items-center justify-center rounded-full bg-slate-900 px-6 py-3 text-sm font-semibold text-white transition hover:bg-slate-700"
+              onClick={acceptConsent}
+              type="button"
+            >
+              Entiendo y quiero continuar
             </button>
           </div>
         </section>

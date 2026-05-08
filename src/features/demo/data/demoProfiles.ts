@@ -5,6 +5,14 @@ export const demoProfiles: DemoProfile[] = [
     id: "social-guide",
     label: "Perfil social y orientador",
     description: "Pensado para validar flujos con una inclinacion fuerte hacia ayuda, educacion y vinculo humano.",
+    userProfile: {
+      name: "Martin Gomez",
+      birthDate: "2008-04-17",
+      educationLevel: "Secundario en curso",
+      currentYear: "5to ano",
+      institution: "Instituto General San Martin",
+      currentStudies: "Taller de acompanamiento escolar",
+    },
     result: {
       analytics: {
         sectionScores: {},
@@ -38,6 +46,14 @@ export const demoProfiles: DemoProfile[] = [
     id: "technical-builder",
     label: "Perfil tecnico y resolutivo",
     description: "Sirve para probar recomendaciones vinculadas a tecnologia, sistemas y problemas concretos.",
+    userProfile: {
+      name: "Mateo Benitez",
+      birthDate: "2007-09-02",
+      educationLevel: "Secundario completo",
+      currentYear: "Ingreso universitario",
+      institution: "Colegio Tecnico N°3",
+      currentStudies: "Curso de programacion web",
+    },
     result: {
       analytics: {
         sectionScores: {},
@@ -71,6 +87,14 @@ export const demoProfiles: DemoProfile[] = [
     id: "creative-explorer",
     label: "Perfil creativo y expresivo",
     description: "Permite validar una salida mas ligada a diseno, comunicacion y exploracion de ideas.",
+    userProfile: {
+      name: "Valentina Ruiz",
+      birthDate: "2008-11-24",
+      educationLevel: "Secundario en curso",
+      currentYear: "6to ano",
+      institution: "Escuela de Artes Visuales",
+      currentStudies: "Taller de ilustracion digital",
+    },
     result: {
       analytics: {
         sectionScores: {},

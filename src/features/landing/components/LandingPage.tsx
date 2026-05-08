@@ -16,15 +16,15 @@ export function LandingPage() {
               <div className="flex items-center gap-4">
                 <img
                   alt="Orienta"
-                  className="h-14 w-14 rounded-2xl bg-white/10 object-contain p-2 ring-1 ring-white/10"
-                  src="/logo.png"
+                  className="h-24 w-24 rounded-3xl bg-white/10 object-contain p-2.5 ring-1 ring-white/10 sm:h-28 sm:w-28"
+                  src="/favicon.png"
                 />
-                <p className="text-sm font-semibold uppercase tracking-[0.28em] text-emerald-300">
+                <p className="text-xl font-bold uppercase tracking-[0.18em] text-emerald-300 sm:text-2xl">
                   Orienta
                 </p>
               </div>
               <h1 className="max-w-3xl text-4xl font-semibold tracking-tight sm:text-5xl">
-                Un test vocacional orientativo para ayudarte a entender mejor que caminos te pueden hacer sentido.
+                Descubri tu camino con un test vocacional claro y orientativo.
               </h1>
               <p className="max-w-2xl text-base leading-7 text-slate-300 sm:text-lg">
                 Pensado para adolescentes de secundaria que necesitan una primera guia clara, amigable y accionable antes de hablar con una profesional.
