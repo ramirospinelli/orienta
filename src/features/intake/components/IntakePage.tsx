@@ -73,10 +73,10 @@ export function IntakePage() {
             Paso 1
           </p>
           <h1 className="mt-3 text-3xl font-semibold tracking-tight text-slate-900 sm:text-4xl">
-            Contame un poco de vos antes de arrancar.
+            Contame un poco de vos.
           </h1>
           <p className="mt-4 max-w-2xl text-sm leading-7 text-slate-600 sm:text-base">
-            Estos datos nos sirven para personalizar el informe y dejar lista la informacion base del CV automatico.
+            Esto nos ayuda a personalizar tu informe y tu CV.
           </p>
 
           <form className="mt-8 grid gap-5 sm:grid-cols-2" onSubmit={handleSubmit}>
@@ -132,7 +132,7 @@ export function IntakePage() {
             </Field>
 
             <div className="sm:col-span-2">
-              <Field label="Ya estudias algo?" helper="Opcional. Puede ser una carrera, curso u oficio que ya estes explorando.">
+              <Field label="Ya estudias algo?" helper="Opcional.">
                 <input
                   className={inputClassName}
                   onChange={(event) =>

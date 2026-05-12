@@ -1,7 +1,6 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 
-import { demoProfiles } from "@/features/demo/data/demoProfiles";
 import {
   AssessmentMode,
   AssessmentResult,
@@ -27,7 +26,6 @@ type AssessmentStore = {
   goToNextQuestion: () => void;
   goToPreviousQuestion: () => void;
   completeAssessment: (result: AssessmentResult) => void;
-  loadDemoProfile: (profileId: string) => void;
   loadDevAnswers: (answers: Record<string, LikertValue>) => void;
   resetAssessment: () => void;
 };
@@ -73,22 +71,6 @@ export const useAssessmentStore = create<AssessmentStore>()(
           result,
           step: "results",
         }),
-      loadDemoProfile: (profileId) => {
-        const profile = demoProfiles.find((item) => item.id === profileId);
-
-        if (!profile) {
-          return;
-        }
-
-        set({
-          mode: "demo",
-          consentAccepted: true,
-          currentQuestionIndex: 0,
-          userProfile: profile.userProfile,
-          result: profile.result,
-          step: "results",
-        });
-      },
       loadDevAnswers: (answers) =>
         set({
           mode: "dev",

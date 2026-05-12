@@ -1,6 +1,6 @@
 export type AssessmentStep = "landing" | "consent" | "intake" | "assessment" | "results";
 
-export type AssessmentMode = "real" | "demo" | "dev";
+export type AssessmentMode = "real" | "dev";
 
 export type AssessmentSection =
   | "temperament"
@@ -91,12 +91,4 @@ export interface AssessmentResult {
   strengths: string[];
   developmentAreas: string[];
   recommendedCareers: CareerSuggestion[];
-}
-
-export interface DemoProfile {
-  id: string;
-  label: string;
-  description: string;
-  userProfile: UserProfile;
-  result: AssessmentResult;
 }

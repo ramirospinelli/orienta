@@ -18,7 +18,7 @@ export function generateReportModel(user: UserProfile, result: AssessmentResult)
       },
       {
         title: "Temperamento dominante",
-        body: `Tu tendencia predominante aparece cercana a un perfil ${result.analytics.dominantTemperament.toLowerCase()}, lo que sugiere una forma particular de vincularte, organizarte y actuar frente a desafios.`,
+        body: `Tu tendencia predominante se acerca a un perfil ${result.analytics.dominantTemperament.toLowerCase()}.`,
       },
       {
         title: "Fortalezas",
@@ -30,16 +30,16 @@ export function generateReportModel(user: UserProfile, result: AssessmentResult)
       },
       {
         title: "Intereses y aptitudes",
-        body: "Tus respuestas muestran afinidades que pueden ayudarte a explorar mejor entornos academicos y laborales donde te sientas comodo, motivado y con ganas de crecer.",
+        body: "Tus respuestas marcan afinidades para seguir explorando opciones de estudio y trabajo.",
       },
       {
-        title: "Carreras sugeridas",
+        title: "Carreras y areas para empezar a explorar",
         items: result.recommendedCareers.map(
           (career) => `${career.title}: ${career.reason}`,
         ),
       },
     ],
     disclaimer:
-      "Este informe es orientativo y no reemplaza una evaluacion profesional. Sirve como punto de partida para pensar opciones, conversar con una psicologa y seguir explorando tu camino.",
+      "Este informe es orientativo y puede ayudarte a pensar opciones con mas claridad.",
   };
 }

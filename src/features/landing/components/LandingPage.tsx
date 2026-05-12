@@ -1,12 +1,12 @@
-import { demoProfiles } from "@/features/demo/data/demoProfiles";
 import { Shell } from "@/shared/components/Shell";
-import { appConfig } from "@/shared/config/appConfig";
+import { WhatsappIcon } from "@/shared/components/WhatsappIcon";
+import { getProfessionalWhatsappUrl } from "@/shared/lib/whatsapp/getProfessionalWhatsappUrl";
 import { useAssessmentStore } from "@/store/assessmentStore";
 
 export function LandingPage() {
   const setStep = useAssessmentStore((state) => state.setStep);
-  const loadDemoProfile = useAssessmentStore((state) => state.loadDemoProfile);
   const brandImageSrc = `${import.meta.env.BASE_URL}favicon.png`;
+  const whatsappUrl = getProfessionalWhatsappUrl();
 
   return (
     <Shell>
@@ -25,77 +25,88 @@ export function LandingPage() {
                 </p>
               </div>
               <h1 className="max-w-3xl text-4xl font-semibold tracking-tight sm:text-5xl">
-                Descubri tu camino con un test vocacional claro y orientativo.
+                Conoce tu perfil y empeza a pensar tu futuro con mas claridad.
               </h1>
               <p className="max-w-2xl text-base leading-7 text-slate-300 sm:text-lg">
-                Pensado para adolescentes de secundaria que necesitan una primera guia clara, amigable y accionable antes de hablar con una profesional.
+                Una experiencia breve para entender mejor tus intereses, fortalezas y posibles caminos.
               </p>
 
               <div className="flex flex-col gap-3 pt-2 sm:flex-row">
                 <button
-                  className="inline-flex items-center justify-center rounded-full bg-emerald-400 px-6 py-3 text-sm font-semibold text-slate-950 transition hover:bg-emerald-300"
+                  className="inline-flex items-center justify-center rounded-full bg-white px-6 py-3 text-sm font-semibold text-slate-950 transition hover:bg-slate-100"
                   onClick={() => setStep("consent")}
                   type="button"
                 >
-                  Comenzar test
+                  Empezar ahora
                 </button>
-                <button
-                  className="inline-flex items-center justify-center rounded-full border border-white/15 bg-white/5 px-6 py-3 text-sm font-semibold text-white transition hover:bg-white/10"
-                  onClick={() => window.scrollTo({ top: document.body.scrollHeight, behavior: "smooth" })}
-                  type="button"
-                >
-                  Ver demo
-                </button>
+                {whatsappUrl ? (
+                  <a
+                    className="inline-flex items-center justify-center gap-2 rounded-full bg-emerald-500 px-6 py-3 text-sm font-semibold text-slate-950 transition hover:bg-emerald-400"
+                    href={whatsappUrl}
+                    rel="noreferrer"
+                    target="_blank"
+                  >
+                    <WhatsappIcon className="h-5 w-5 shrink-0" />
+                    Solicitar orientacion profesional
+                  </a>
+                ) : null}
               </div>
+              {!whatsappUrl ? (
+                <p className="text-xs leading-6 text-slate-400">
+                  Para mostrar el acceso directo al profesional, configura `VITE_WHATSAPP_NUMBER` y reinicia el servidor de desarrollo.
+                </p>
+              ) : null}
             </div>
 
             <div className="rounded-[1.75rem] border border-white/10 bg-white/5 p-5 backdrop-blur">
-              <p className="text-sm font-medium text-emerald-200">Que vas a obtener</p>
+              <p className="text-sm font-medium text-emerald-200">Con Orienta podras obtener</p>
               <ul className="mt-4 space-y-3 text-sm leading-6 text-slate-200">
-                <li>Un informe amigable sobre tu perfil.</li>
-                <li>Fortalezas y areas a desarrollar.</li>
-                <li>Sugerencias de carreras, tecnicaturas y oficios.</li>
-                <li>Un CV base para descargar al terminar.</li>
+                <li>Un informe simple sobre tu perfil.</li>
+                <li>Fortalezas y areas afines.</li>
+                <li>Sugerencias para empezar a explorar carreras.</li>
+                <li>Un CV inicial para descargar.</li>
               </ul>
             </div>
           </div>
         </section>
 
         <section className="grid gap-4 md:grid-cols-3">
-          <ValueCard title="Rapido de entender" description="Una pregunta por pantalla para que el recorrido se sienta liviano y claro." />
-          <ValueCard title="Orientativo" description="No reemplaza una evaluacion profesional ni hace diagnosticos." />
-          <ValueCard title="Listo para conversar" description="Al final queda todo preparado para seguir con una psicologa." />
+          <ValueCard title="Simple" description="Avanzas paso a paso, sin vueltas." />
+          <ValueCard title="Orientativo" description="Te ayuda a pensar opciones, no a cerrarlas." />
+          <ValueCard title="Accionable" description="Te llevas un informe, un CV y un punto de partida." />
         </section>
 
-        {appConfig.enableDemoMode ? (
-          <section className="space-y-4 rounded-[2rem] bg-white p-6 shadow-sm ring-1 ring-black/5 sm:p-8">
-            <div className="space-y-2">
-              <p className="text-sm font-semibold uppercase tracking-[0.2em] text-slate-500">
-                Demo mode
-              </p>
-              <h2 className="text-2xl font-semibold tracking-tight text-slate-900">
-                Mirar resultados sin hacer todo el test
-              </h2>
-              <p className="max-w-2xl text-sm leading-6 text-slate-600">
-                Esto sirve para validar la experiencia y para iterar rapido durante desarrollo sin contestar las 40 preguntas cada vez.
-              </p>
+        <section className="grid gap-4 lg:grid-cols-[1.1fr_0.9fr]">
+          <div className="rounded-[2rem] bg-white p-6 shadow-sm ring-1 ring-black/5 sm:p-8">
+            <p className="text-sm font-semibold uppercase tracking-[0.2em] text-emerald-600">
+              Como funciona
+            </p>
+            <h2 className="mt-3 text-2xl font-semibold tracking-tight text-slate-900 sm:text-3xl">
+              Un recorrido breve para transformar autoconocimiento en direccion.
+            </h2>
+            <div className="mt-6 grid gap-4 sm:grid-cols-3">
+              <JourneyStep number="1" title="Completa tu perfil" description="Dejas tus datos para personalizar el informe." />
+              <JourneyStep number="2" title="Responde la evaluacion" description="Nos contas como pensas, que te interesa y que se te da bien." />
+              <JourneyStep number="3" title="Recibe tu orientacion" description="Obtenes un informe, un CV y opciones para seguir explorando." />
             </div>
+          </div>
 
-            <div className="grid gap-4 lg:grid-cols-3">
-              {demoProfiles.map((profile) => (
-                <button
-                  className="rounded-[1.5rem] border border-slate-200 bg-slate-50 p-5 text-left transition hover:border-emerald-300 hover:bg-emerald-50"
-                  key={profile.id}
-                  onClick={() => loadDemoProfile(profile.id)}
-                  type="button"
-                >
-                  <p className="text-base font-semibold text-slate-900">{profile.label}</p>
-                  <p className="mt-2 text-sm leading-6 text-slate-600">{profile.description}</p>
-                </button>
-              ))}
+          <div className="rounded-[2rem] bg-emerald-50 p-6 shadow-sm ring-1 ring-emerald-100 sm:p-8">
+            <p className="text-sm font-semibold uppercase tracking-[0.2em] text-emerald-700">
+              Lo importante
+            </p>
+            <div className="mt-4 space-y-4 text-sm leading-7 text-emerald-950 sm:text-base">
+              <p>
+                Esto es una primera orientacion para conocerte mejor.
+              </p>
+              <p>
+                Si queres profundizar, podes conversar los resultados con un profesional.
+              </p>
             </div>
-          </section>
-        ) : null}
+          </div>
+        </section>
+
+        
       </div>
     </Shell>
   );
@@ -106,6 +117,26 @@ function ValueCard({ title, description }: { title: string; description: string 
     <div className="rounded-[1.75rem] bg-white p-6 shadow-sm ring-1 ring-black/5">
       <h2 className="text-lg font-semibold text-slate-900">{title}</h2>
       <p className="mt-3 text-sm leading-6 text-slate-600">{description}</p>
+    </div>
+  );
+}
+
+function JourneyStep({
+  description,
+  number,
+  title,
+}: {
+  description: string;
+  number: string;
+  title: string;
+}) {
+  return (
+    <div className="rounded-[1.5rem] bg-slate-50 p-5 ring-1 ring-slate-200">
+      <div className="flex h-9 w-9 items-center justify-center rounded-full bg-slate-900 text-sm font-semibold text-white">
+        {number}
+      </div>
+      <h3 className="mt-4 text-base font-semibold text-slate-900">{title}</h3>
+      <p className="mt-2 text-sm leading-6 text-slate-600">{description}</p>
     </div>
   );
 }

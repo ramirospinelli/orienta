@@ -13,19 +13,17 @@ export function ConsentPage() {
             Antes de empezar
           </p>
           <h1 className="mt-3 text-3xl font-semibold tracking-tight text-slate-900 sm:text-4xl">
-            Esto es una herramienta orientativa, no un diagnostico.
+            Esto es orientativo, no una respuesta definitiva.
           </h1>
 
           <div className="mt-6 space-y-4 text-sm leading-7 text-slate-600 sm:text-base">
             <p>
-              Orienta busca ayudarte a conocerte mejor y a abrir conversaciones vocacionales con una profesional. No reemplaza una evaluacion psicologica ni toma decisiones por vos.
+              Orienta te ayuda a conocerte mejor y a pensar opciones.
             </p>
             <p>
-Al finalizar, se enviara un resumen a la psicologa y vos vas a poder descargar tus PDFs.
+              Al final vas a ver tu informe, tu CV inicial y, si queres, vas a poder hablar con un profesional.
             </p>
           </div>
-
-          
 
           <div className="mt-8 flex flex-col gap-3 sm:flex-row">
             <button
@@ -40,7 +38,7 @@ Al finalizar, se enviara un resumen a la psicologa y vos vas a poder descargar t
               onClick={acceptConsent}
               type="button"
             >
-              Entiendo y quiero continuar
+              Continuar
             </button>
           </div>
         </section>

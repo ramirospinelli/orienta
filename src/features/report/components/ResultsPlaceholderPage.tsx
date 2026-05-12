@@ -3,7 +3,9 @@ import { useState } from "react";
 import { generateCvModel } from "@/features/cv/domain/generateCvModel";
 import { generateReportModel } from "@/features/report/domain/generateReportModel";
 import { Shell } from "@/shared/components/Shell";
+import { WhatsappIcon } from "@/shared/components/WhatsappIcon";
 import { exportCvToPdf, exportReportToPdf } from "@/shared/lib/pdf/exportModelsToPdf";
+import { getProfessionalWhatsappUrl } from "@/shared/lib/whatsapp/getProfessionalWhatsappUrl";
 import { useAssessmentStore } from "@/store/assessmentStore";
 
 export function ResultsPlaceholderPage() {
@@ -13,6 +15,11 @@ export function ResultsPlaceholderPage() {
 
   const report = userProfile && result ? generateReportModel(userProfile, result) : null;
   const cv = userProfile && result ? generateCvModel(userProfile, result) : null;
+  const whatsappUrl = userProfile
+    ? getProfessionalWhatsappUrl(
+        `Hola, termine mi experiencia en Orienta. Quiero conversar sobre mis resultados y solicitar un turno. Mi nombre es ${userProfile.name}.`,
+      )
+    : "";
 
   async function handleExport(kind: "report" | "cv") {
     if (!userProfile || !report || !cv) {
@@ -39,18 +46,27 @@ export function ResultsPlaceholderPage() {
     <Shell>
       <div className="mx-auto max-w-6xl space-y-6">
         <section className="rounded-[2rem] bg-slate-950 p-8 text-white shadow-xl sm:p-10">
-          <div className="flex flex-wrap items-center gap-3">
-            <span className="rounded-full bg-emerald-300 px-3 py-1 text-xs font-semibold uppercase tracking-[0.18em] text-slate-950">
-              {mode === "demo" ? "Demo" : "Resultados"}
-            </span>
-            <span className="text-sm text-slate-300">Informe y CV listos para exportar.</span>
+          <div className="flex flex-wrap items-center justify-between gap-3">
+            <div className="flex flex-wrap items-center gap-3">
+              <span className="rounded-full bg-emerald-300 px-3 py-1 text-xs font-semibold uppercase tracking-[0.18em] text-slate-950">
+                Resultados
+              </span>
+              <span className="text-sm text-slate-300">Tu informe inicial y tu CV ya estan listos.</span>
+            </div>
+            <button
+              className="inline-flex items-center justify-center rounded-full bg-white px-5 py-2.5 text-sm font-semibold text-slate-950 transition hover:bg-slate-100"
+              onClick={() => setStep("landing")}
+              type="button"
+            >
+              Volver
+            </button>
           </div>
 
           <h1 className="mt-4 text-3xl font-semibold tracking-tight sm:text-4xl">
             {result ? "Tus resultados ya estan listos." : "Todavia no hay un resultado generado."}
           </h1>
           <p className="mt-4 max-w-3xl text-sm leading-7 text-slate-300 sm:text-base">
-            Esta salida esta pensada para ayudarte a entender mejor tu perfil y para que la psicologa tenga un punto de partida concreto en la conversacion.
+            Una primera mirada sobre tu perfil, tus fortalezas y caminos para explorar.
           </p>
 
           {exportError ? (
@@ -95,6 +111,24 @@ export function ResultsPlaceholderPage() {
                     </div>
                   ))}
                 </dl>
+
+                <div className="mt-8 grid gap-3 md:grid-cols-3">
+                  <HighlightCard
+                    title="Perfil dominante"
+                    value={result.analytics.dominantTemperament}
+                    description="Una pista sobre como sueles moverte y responder."
+                  />
+                  <HighlightCard
+                    title="Codigo Holland"
+                    value={result.analytics.hollandCode || "-"}
+                    description="Una referencia para pensar entornos afines."
+                  />
+                  <HighlightCard
+                    title="Proximo paso"
+                    value="Explorar"
+                    description="Usa estas sugerencias como punto de partida."
+                  />
+                </div>
               </section>
 
               {report.sections.map((section) => (
@@ -167,13 +201,31 @@ export function ResultsPlaceholderPage() {
               <section className="rounded-[2rem] bg-white p-7 shadow-sm ring-1 ring-black/5 sm:p-8">
                 <h3 className="text-lg font-semibold text-slate-900">Acciones</h3>
                 <div className="mt-5 space-y-3">
-                  <button
-                    className="inline-flex w-full items-center justify-center rounded-full border border-slate-200 bg-white px-5 py-3 text-sm font-semibold text-slate-700 transition hover:bg-slate-50"
-                    onClick={() => setStep("landing")}
-                    type="button"
-                  >
-                    Volver
-                  </button>
+                  {whatsappUrl ? (
+                    <a
+                      className="inline-flex w-full items-center justify-center gap-2 rounded-full bg-emerald-500 px-5 py-3 text-sm font-semibold text-slate-950 transition hover:bg-emerald-400"
+                      href={whatsappUrl}
+                      rel="noreferrer"
+                      target="_blank"
+                    >
+                      <WhatsappIcon className="h-4 w-4" />
+                      Solicitar orientacion profesional
+                    </a>
+                  ) : null}
+                </div>
+                <p className="mt-4 text-sm leading-6 text-slate-500">
+                  Usa esto como base para seguir explorando o conversar con un profesional.
+                </p>
+              </section>
+
+              <section className="rounded-[2rem] bg-emerald-50 p-7 shadow-sm ring-1 ring-emerald-100 sm:p-8">
+                <p className="text-sm font-semibold uppercase tracking-[0.18em] text-emerald-700">
+                  Como leer estas sugerencias
+                </p>
+                <div className="mt-4 space-y-3 text-sm leading-7 text-emerald-950">
+                  <p>
+                    No son una respuesta definitiva. Son un punto de partida para seguir buscando.
+                  </p>
                 </div>
               </section>
 
@@ -197,6 +249,24 @@ function CvPreviewSection({ children, title }: { children: React.ReactNode; titl
     <div>
       <h4 className="text-xs font-semibold uppercase tracking-[0.18em] text-slate-500">{title}</h4>
       <div className="mt-3">{children}</div>
+    </div>
+  );
+}
+
+function HighlightCard({
+  description,
+  title,
+  value,
+}: {
+  description: string;
+  title: string;
+  value: string;
+}) {
+  return (
+    <div className="rounded-[1.35rem] bg-slate-50 p-4 ring-1 ring-slate-200">
+      <p className="text-xs font-semibold uppercase tracking-[0.18em] text-slate-500">{title}</p>
+      <p className="mt-2 text-lg font-semibold text-slate-900">{value}</p>
+      <p className="mt-2 text-sm leading-6 text-slate-600">{description}</p>
     </div>
   );
 }
